@@ -1,0 +1,143 @@
+FORMAT: 1A
+HOST: http://development.ihomenet.net/
+# HomeNet
+
+HomeNet API documentation for developer to easily test & playaround with
+
+## OAuth Token [/oauth/token]
+
+### Request Token [POST]
+In order to get the api token, user need to authenticate with password grant (OAuth2)
+
++ Request (application/json)
+
+    + Attributes
+    
+        + grant_type: password (string, required) - OAuth grant type
+        + client_id (number, required) - The client id from system for password grant client.
+        + client_secret (string, required) - The client secret from system.
+        + username (string, required) - User's username
+        + password (string, required) - User's password
+        + scope (string) - not applicable for now just left is empty
+
++ Response 200 (application/json)
+
+        {
+            "token_type": "Bearer",
+            "expires_in": 31535999,
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA0YTdiMzQzZTNjYjY5NmNkYWY1YzQxOTNkMWU1ODA2YWJlNzZlN2RjZjNiZTRiMWYwYWE0NzAzZDQxZTNmZTY1ZTA2OTI1ZDgzNTc3NTEyIn0.eyJhdWQiOiIyIiwianRpIjoiMDRhN2IzNDNlM2NiNjk2Y2RhZjVjNDE5M2QxZTU4MDZhYmU3NmU3ZGNmM2JlNGIxZjBhYTQ3MDNkNDFlM2ZlNjVlMDY5MjVkODM1Nzc1MTIiLCJpYXQiOjE0ODE4NTc3ODcsIm5iZiI6MTQ4MTg1Nzc4NywiZXhwIjoxNTEzMzkzNzg3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Q1w2whkv2zWSvoQZ4c2ut1RZwvE18L2r3Szw6UMVgXKlyJCqtVUOE-L09ohpj3kK56pRm1MkOito0wbQ3vO-uLSMfyRgbd7yQUnwD2WYXtUGFuiFah0cA1LRJQfxZ2Oi_6V4l5QySKS2KcpDD3eIR4ggst1FVIE-z52EFCohxQezmJtl1FaLYCGoB5e1SLGBpzqVUye2GgV8yPaqmVKU0zZ-mWFv72cIUHiJNbh0M_8V1i4lSoiz5UeOp0CZuOBUVhonsLBfF-1HE7AHeQG0o_96COlk2F6m3sZAETvUM7JeN_3KcFYdPklMnqXwOPM3fmP1WjXbXLWDpi0-36U8-Zr__R86aPb9QUq7G394H3mvk_ZfHn0wAyphcaoVbBX_KVs9L5qtD7aghPnVjho44gkCwuPYu70Trp3KkHKphlG4AWuluPXGrsN_lKfqWYkrILnsDD1iUGF4wDUKYHazWcCdupdA5LEPtMNwzImYJyFsd4LJWk6kdYtQ1ncU7vg6eeZV1tP5NQtw0882ItyhhWDj-jemME0rRRJ6vFNAbiq0AiGDEnQYoxQAocusS28F4FwNPtyhsa6TwgNAlM4mGCyGKJosffiw0T68RHsocFEl5BH2twzcNtquA1z-gLWRPbuRy8MTL_dunJR-47ASj0xVjNY-a_x6bm4m3FtPZFg",
+            "refresh_token": "TuK9eaWi284r0DrRvViK8pe7E52Stn5z4uXoKo/ePHGvuA3gT9AMKQyQFHmhTt0Aj7kvRB+cKfvT+SOZAIWIjniy4u/flb6WFBvBnY2+/gYXwwyMxdkJbgcdAlpES18QZUht0iYBbBmn9IVvQwhmdggGm2Lc3WXvsw1xjPTf3xgBK+/FKu/XDRH2QTvQtAC4iELtWmjn7oFs1ARAjTgquMF5I6y1fi4/Pb3SksuJRmim6c6hz16ck+HJHJ3KwbhDMQ6qXknnHfwzq3qzBASPyb6Mg2c6wZHFrfEdKCZ8d7B+UBuh/ePP3ztkwc/pFXde3trp83lapyeepOb3oU8pyOm9ySTA4ieP7xueVieyyBPKqYmd1RZvwLXqkfSKrgDSojvhAVR4dob7DOkAwQRT55WjELmhz+ZvQPCLn4r9M8lG4P3x0O45l/96GtsCoi2bXdzDpNbL4BvFmtSDei1ccPaPXBTDvXoGqJbipyRGLXcONidSBDCW60un0eyAXIGKPm+aXaJR6IQlGMoTMIv4yXJXlPEULCKrSCJSD5lDq74WvazQnogDBYQDhp1Xk1H48qSSxz3kf7h1IL4FRBkd3Y5Gm2Kb3Wy9hSKUEYtuVIxsSRg1gh8GHVSPldZS9ZxXgPe7S3V72stoDsXtoHIsYBhR4ULvvkmfBmUMZS0pQM0="
+        }
+
++ Response 401 (application/json)
+    
+        {
+            "error": "invalid_credentials",
+            "message": "The user credentials were incorrect."
+        }
+
+
+### Refresh Token [PUT]
+Application issues short-lived access tokens, users will need to refresh their access tokens via the refresh token that was provided to them when the access token was issued
+
++ Request (application/json)
+
+    + Attributes
+    
+        + grant_type: refresh_token (string, required) - OAuth grant type
+        + refresh_token: JvRR3dE7Gs3/Y7fuf6uv65jzPJoWWAiBY+fJhoysZTOtFznFcRieJTU1jCrlGVeOCbbbYnHEvk0aumaw8C6mz0sEzNWJNvolRuZRjvnvfVN180XXjOi3C/vo/62ymcGCtaDiGgqcEofvSAEoFJkegqOsMsuEh91fD/mmDybOKATUxlWO2sww7P6OXVWl1j5akGZc/FcTeTkEgP/cJdlCjPVkA9UIyoVt1aSYG0dSKYbNouh0fDFdHt9pmkmHSlG2jDE7f5rZz/Ypv6BbnoGxftYY7biQhLpIDfXMduqMnQn1q/vm3FGuchDCxC+98YhebaX9muif3yPVRBAkUl1I+e8D8/EXvw07FjJtaf/BwOklSgJ2k//uyBsFWkcMm1V9B1oepyjE11B512Pa4D0Fz+t7MU1AMYBpR+/BpDuVflnGFwIE8THL5H4wEkK2OQSQYBNNCT5yAf3zd7RTf7gay3VaeMdCxL44fyV6tT8a2yrfGzOKUHivQNORq85dB66LzVmtbyUbA+lCnh78MACb0hFzfFxtxO//OEhjG95Kjh02lmI3euztamVi/42P44J280MTqIQexJI2pLopoGoeBwg9wNgDe5QD3sfExpJNwvELwXjEbOv50LJnJ5Xc3diKH45l2vhElxZ1+XZkyu9BNbLMThk9L5zvyliTuyyAc38= (string, required) - Refresh token
+        + client_id (number, required) - The client id from system for password grant client.
+        + client_secret (string, required) - The client secret from system.
+        + scope (string) - not applicable for now just left is empty
+
++ Response 200 (application/json)
+
+        {
+            "token_type": "Bearer",
+            "expires_in": 31535999,
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA0YTdiMzQzZTNjYjY5NmNkYWY1YzQxOTNkMWU1ODA2YWJlNzZlN2RjZjNiZTRiMWYwYWE0NzAzZDQxZTNmZTY1ZTA2OTI1ZDgzNTc3NTEyIn0.eyJhdWQiOiIyIiwianRpIjoiMDRhN2IzNDNlM2NiNjk2Y2RhZjVjNDE5M2QxZTU4MDZhYmU3NmU3ZGNmM2JlNGIxZjBhYTQ3MDNkNDFlM2ZlNjVlMDY5MjVkODM1Nzc1MTIiLCJpYXQiOjE0ODE4NTc3ODcsIm5iZiI6MTQ4MTg1Nzc4NywiZXhwIjoxNTEzMzkzNzg3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Q1w2whkv2zWSvoQZ4c2ut1RZwvE18L2r3Szw6UMVgXKlyJCqtVUOE-L09ohpj3kK56pRm1MkOito0wbQ3vO-uLSMfyRgbd7yQUnwD2WYXtUGFuiFah0cA1LRJQfxZ2Oi_6V4l5QySKS2KcpDD3eIR4ggst1FVIE-z52EFCohxQezmJtl1FaLYCGoB5e1SLGBpzqVUye2GgV8yPaqmVKU0zZ-mWFv72cIUHiJNbh0M_8V1i4lSoiz5UeOp0CZuOBUVhonsLBfF-1HE7AHeQG0o_96COlk2F6m3sZAETvUM7JeN_3KcFYdPklMnqXwOPM3fmP1WjXbXLWDpi0-36U8-Zr__R86aPb9QUq7G394H3mvk_ZfHn0wAyphcaoVbBX_KVs9L5qtD7aghPnVjho44gkCwuPYu70Trp3KkHKphlG4AWuluPXGrsN_lKfqWYkrILnsDD1iUGF4wDUKYHazWcCdupdA5LEPtMNwzImYJyFsd4LJWk6kdYtQ1ncU7vg6eeZV1tP5NQtw0882ItyhhWDj-jemME0rRRJ6vFNAbiq0AiGDEnQYoxQAocusS28F4FwNPtyhsa6TwgNAlM4mGCyGKJosffiw0T68RHsocFEl5BH2twzcNtquA1z-gLWRPbuRy8MTL_dunJR-47ASj0xVjNY-a_x6bm4m3FtPZFg",
+            "refresh_token": "TuK9eaWi284r0DrRvViK8pe7E52Stn5z4uXoKo/ePHGvuA3gT9AMKQyQFHmhTt0Aj7kvRB+cKfvT+SOZAIWIjniy4u/flb6WFBvBnY2+/gYXwwyMxdkJbgcdAlpES18QZUht0iYBbBmn9IVvQwhmdggGm2Lc3WXvsw1xjPTf3xgBK+/FKu/XDRH2QTvQtAC4iELtWmjn7oFs1ARAjTgquMF5I6y1fi4/Pb3SksuJRmim6c6hz16ck+HJHJ3KwbhDMQ6qXknnHfwzq3qzBASPyb6Mg2c6wZHFrfEdKCZ8d7B+UBuh/ePP3ztkwc/pFXde3trp83lapyeepOb3oU8pyOm9ySTA4ieP7xueVieyyBPKqYmd1RZvwLXqkfSKrgDSojvhAVR4dob7DOkAwQRT55WjELmhz+ZvQPCLn4r9M8lG4P3x0O45l/96GtsCoi2bXdzDpNbL4BvFmtSDei1ccPaPXBTDvXoGqJbipyRGLXcONidSBDCW60un0eyAXIGKPm+aXaJR6IQlGMoTMIv4yXJXlPEULCKrSCJSD5lDq74WvazQnogDBYQDhp1Xk1H48qSSxz3kf7h1IL4FRBkd3Y5Gm2Kb3Wy9hSKUEYtuVIxsSRg1gh8GHVSPldZS9ZxXgPe7S3V72stoDsXtoHIsYBhR4ULvvkmfBmUMZS0pQM0="
+        }
+
++ Response 400 (application/json)
+    
+        {
+            "error": "invalid_request",
+            "message": "The refresh token is invalid.",
+            "hint": "Cannot decrypt the refresh token"
+        }
+
+## View State [/api/viewstate]
+Account view state management purpose
+
+### Switch View State [PATCH]
+
++ Request (application/json)
+    + Attributes
+        + state(string, required) - e.g m_1, v_1
+            
++ Response 200
+
+## Phonebook [/api/phonebook/{id}]
++ Parameters
+    + id (number, optional) - id only for updating
+
+### List Phonebook [GET]
+Get Property's phonebooks data
+
++ Request
+    + Attributes
+        + page (number, optional) - page number navigation
+        + limit (number, optional) - record limit per page
+        + sort_by (string, optional) - sorting column name
+        + sort (string, optional) - direction of sorting e.g asc, desc
+        
++ Response 200
+
+### Create Phonebook [POST]
+Creating Phonebook
+
++ Request (application/json)
+    + Attributes
+        + name (string, required) - Contact Name
+        + designation (string) - Contactdesignation
+        + phone1 (string) - phone1
+        + mobile (string) - mobile
+        + email (string) - email
+        + avatar (string) - File
+
++ Response 200
+
+### Delete Phonebook [DELETE]
+Deleting Phonebook
+
++ Request (application/json)
+    + Attributes
+        + id (string, required) - id
+        + _method (string, required) - DELETE
+
++ Response 200
+
+### View State Options [GET]
+List all posible view state options
++ Request (application/json)
+    + Attributes
+        + current(boolean, optional) - if true return current view state
++ Response 200
+
+## Profile [/api/profile]
+View current logged user profile
+
+### Fetch User Profile [GET]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    {   
+        "id": "user_id",
+        "name": "user_full_name",
+        "email": "user_email",
+        "phone": "user_phone",
+        "mobile": "user_mobile",
+        "avatar": "user_avatar"
+    }
