@@ -1,10 +1,16 @@
 FORMAT: 1A
-HOST: http://development.ihomenet.net/
+HOST: http://development.ihomenet.net/api/
 # HomeNet
 
 HomeNet API documentation for developer to easily test & playaround with
 
-## Announcement [/api/announcement]
+## Activity [/activity]
+### Activity List [GET]
+Under Maintenance
+
++ Response 200
+
+## Announcement [/announcement]
 
 ### List Announcement [GET]
 Get announcement list
@@ -18,37 +24,56 @@ Get announcement list
         + query (string, optional) - search text
 
 + Response 200 (application/json)
-        {
-    "data": [
-        {
-            "id": 29,
-            "manager_id": 11,
-            "name": "Management Office",
-            "designation": "Admin",
-            "email": "",
-            "mobile": "016.2100.792",
-            "phone1": "03.6156.1321",
-            "phone2": "",
-            "fax": null,
-            "avatar": "http://homenet.app/metro/pages/img/avatars/team4.jpg",
-            "tags": null,
-            "created_at": null,
-            "updated_at": null
-        }
-    ],
-    "meta": {
-        "pagination": {
-            "total": 10,
-            "count": 10,
-            "per_page": 20,
-            "current_page": 1,
-            "total_pages": 1,
-            "links": []
-        }
-    }
-}
 
-## Phonebook [/api/phonebook/{id}]
+        {
+            "data": [
+                {
+                    "id": 29,
+                    "manager_id": 11,
+                    "name": "Management Office",
+                    "designation": "Admin",
+                    "email": "",
+                    "mobile": "016.2100.792",
+                    "phone1": "03.6156.1321",
+                    "phone2": "",
+                    "fax": null,
+                    "avatar": "http://homenet.app/metro/pages/img/avatars/team4.jpg",
+                    "tags": null,
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ],
+            "meta": {
+                "pagination": {
+                    "total": 10,
+                    "count": 10,
+                    "per_page": 20,
+                    "current_page": 1,
+                    "total_pages": 1,
+                    "links": []
+                }
+            }
+        }
+
+## Facility [/facility]
+### Facility List [GET]
+Under Maintenance
+
++ Response 200
+
+## Facility Booking [/booking]
+### Facility Booking List [GET]
+Under Maintenance
+
++ Response 200
+
+## Incident Report [/report/incident]
+### Incident Report List [GET]
+Under Maintenance
+
++ Response 200
+
+## Phonebook [/phonebook/{id}]
 + Parameters
     + id (number, optional) - id only for updating
 
@@ -119,7 +144,7 @@ Deleting Phonebook
 
 + Response 200
 
-## Profile [/api/profile]
+## Profile [/profile]
 View current logged user profile
 
 ### Fetch User Profile [GET]
@@ -136,7 +161,20 @@ View current logged user profile
             "mobile": "user_mobile",
             "avatar": "user_avatar"
         }
-        
+
+## Repository [/repository]
+
+### Repository List [GET]
+Under maintenance
+
++ Response 200
+
+## Service Request [/service/request]
+
+### Service Request List [GET]
+Under maintenance
++ Response 200
+
 ## OAuth Token [/oauth/token]
 
 ### Request Token [POST]
@@ -199,8 +237,14 @@ Application issues short-lived access tokens, users will need to refresh their a
             "message": "The refresh token is invalid.",
             "hint": "Cannot decrypt the refresh token"
         }
+        
+## Vacancy [/vacancy]
+### Vacancy List [GET]
+Under Maintenance
 
-## View State [/api/viewstate]
++ Response 200
+
+## View State [/viewstate]
 Account view state management purpose
 
 ### Switch View State [PATCH]
