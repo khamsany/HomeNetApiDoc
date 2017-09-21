@@ -200,8 +200,10 @@ View current logged user profile
 
 ## Repository [/repository]
 
-### Repository List [GET]
-Under maintenance
+### Repository List [GET /{?manager_id,withFiles}]
++ Parameters
+    + manager_id: manager id (number, optional) - When view state is "Manager" this will be ignore
+    + withFiles: to attach with files (boolean, optional) - set to 1 if you require list to be attached in the list together
 
 + Response 200
 
