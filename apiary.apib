@@ -4,7 +4,9 @@ HOST: http://development.ihomenet.net/api/
 
 HomeNet API documentation for developer to easily test & playaround with
 
-## Activity [/activity]
+All Reference with * at the end is still under maintenance
+
+## Activity* [/activity]
 ### Activity List [GET]
 Under Maintenance
 
@@ -86,7 +88,7 @@ Get announcement details
             "sent_at": "2017-09-19 05:02:15"
         }
 
-## Facility [/facility]
+## Facility* [/facility]
 ### Facility List [GET]
 Under Maintenance
 
@@ -94,17 +96,116 @@ Under Maintenance
 
 ## Facility Booking [/booking]
 ### Facility Booking List [GET]
-Under Maintenance
+Get Booking List for Management / Resident base on view state
 
-+ Response 200
++ Request
+    + Attributes
+        + page (number, optional) - page number navigation
+        + limit (number, optional) - record limit per page
+        + sort_by (string, optional) - sorting column name
+        + sort (string, optional) - direction of sorting e.g asc, desc
+        + query (string, optional) - search text
+        
 
-## Incident Report [/report/incident]
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": 2,
+                    "facility_id": 2,
+                    "manager_id": 1,
+                    "residence_id": 72,
+                    "start_datetime": "2017-10-20 13:10:00",
+                    "end_datetime": "2017-10-22 17:10:00",
+                    "priority": 2,
+                    "request_note": null,
+                    "status": 2,
+                    "created_at": "2017-09-19 05:00:25",
+                    "updated_at": "2017-09-19 05:00:25",
+                    "deleted_at": null,
+                    "created_by": 2,
+                    "updated_by": 2,
+                    "deleted_by": null,
+                    "user": {
+                        "id": 2,
+                        "name": "Khamsany Misran",
+                        "email": "khamsany@yahoo.com",
+                        "facebook_id": null,
+                        "google_id": null,
+                        "avatar": "http://homenet.app/metro/pages/img/avatars/team3.jpg",
+                        "register_as": "manager",
+                        "phone1": null,
+                        "phone2": null,
+                        "mobile": null,
+                        "active": 1,
+                        "created_at": null,
+                        "updated_at": "2017-09-21 11:08:41"
+                    },
+                    "manager": {
+                        "id": 1,
+                        "name": "Millennium @ Technology Park",
+                        "property_name": "Millennium @ Technology Park",
+                        "description": "Developer test suite",
+                        "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                        "zipcode": "57000",
+                        "created_by": 1,
+                        "updated_by": null,
+                        "created_at": null,
+                        "updated_at": null,
+                        "lng": "101.68871500",
+                        "lat": "3.04764200"
+                    },
+                    "facility": {
+                        "id": 2,
+                        "manager_id": 1,
+                        "name": "Badminton Court",
+                        "description": null,
+                        "created_at": "2017-09-19 05:00:25",
+                        "updated_at": "2017-09-19 05:00:25",
+                        "deleted_at": null,
+                        "created_by": 5,
+                        "updated_by": 14,
+                        "deleted_by": null
+                    },
+                    "residence": {
+                        "id": 72,
+                        "manager_id": 1,
+                        "user_id": 2,
+                        "name": "Khamsany Misran",
+                        "phone": null,
+                        "mobile": null,
+                        "email": "khamsany@yahoo.com",
+                        "user_linked_at": "2017-09-19 05:00:24",
+                        "user_linked_by": null,
+                        "created_at": "2017-09-19 05:00:24",
+                        "updated_at": "2017-09-19 05:00:24",
+                        "deleted_at": null,
+                        "created_by": null,
+                        "updated_by": null,
+                        "deleted_by": null
+                    }
+                }
+            ],
+            "meta": {
+                "pagination": {
+                    "total": 1,
+                    "count": 1,
+                    "per_page": 20,
+                    "current_page": 1,
+                    "total_pages": 1,
+                    "links": []
+                }
+            }
+        }
+
+## Incident Report* [/report/incident]
 ### Incident Report List [GET]
 Under Maintenance
 
 + Response 200
 
-## Neighborhood Explorer [/explorer]
+## Neighborhood Explorer* [/explorer]
 ### Neighborhood Explorer List [GET]
 
 + Response 200
@@ -207,7 +308,7 @@ View current logged user profile
 
 + Response 200
 
-## Service Request [/service/request]
+## Service Request* [/service/request]
 
 ### Service Request List [GET]
 Under maintenance
