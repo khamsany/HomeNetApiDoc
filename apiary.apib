@@ -6,6 +6,33 @@ HomeNet API documentation for developer to easily test & playaround with
 
 All Reference with * at the end is still under maintenance
 
+# Data Structures
+
+## ServiceRequestModel 
++ belongs_to (enum[string], required) - Owner type of the Service Request
+            + Default: manager
+            + Members
+                + manager
+                + vendor
+                + user
++ belongs_to_id (number, required) - Owner id
++ available_datetime: 12/01/2017 12:30 AM (string, optional) - Available date & time format d/m/Y h:i A
++ due_date: 12/01/2017 (string, optional) - Due date e.g format d/m/Y
++ title (string, required)
++ property_id (number, required) - Property id
++ priority (enum[number], required)
+    + Default: 1
+    + Members
+        + 1 - Low
+        + 2 - Normal
+        + 3 - High
++ description (string, optional)
++ type (number, required) - service type id
++ files (array, optional) - files to upload
+
+## CommentModel
++ text (string, required)
+
 ## Activity* [/activity]
 ### Activity List [GET]
 Under Maintenance
@@ -309,36 +336,72 @@ View current logged user profile
 + Response 200
 
 ## Service Request [/service/request]
-
-### Service Request List [GET]
+        
+### List [GET]
 + Response 200
 
-### Create New Service Request [POST]
-+ Request (application/json)
+### Create [POST]
 
++ Request (application/json)
+      + Attributes (ServiceRequestModel)  
++ Response 200
+
+### Update [PUT /{id}]
+
++ Parameters
+    + id (number, required) - Service Request's id
+    
++ Request (application/json)
+    + Attributes (ServiceRequestModel)
+
++ Response 200
+
+### Delete [DELETE /{id}]
+
++ Parameters
+    + id (number, required) - Service Request's id
+
++ Response 200
+
+### Add Comment [POST /comment/{id}]
+
++ Parameters
+    + id (number, required) - Service Request's id
+
++ Request (application/json)
+    + Attributes (CommentModel)
+        + text (string, optional)
+    
++ Response 200
+
+### Add Rating [POST /rating/{id}]
+
++ Parameters
+    + id (number, required) - Service Request's id
+    
++ Request (application/json)
     + Attributes
-        + belongs_to: (enum[string], required) - Owner type of the Service Request
-            + Default: manager
-            + Members:
-                + manager
-                + vendor
-                + user
-        + belongs_to_id (number, required) - Owner id
-        + available_datetime: 12/01/2017 12:30 AM (string, optional) - Available date & time format d/m/Y h:i A
-        + due_date: 12/01/2017 (string, optional) - Due date e.g format d/m/Y
-        + title (string, required)
-        + property_id (number, required) - Property id
-        + priority: (enum[number], required)
-            + Default: 1
-            + Members:
-                + 1 - Low
-                + 2 - Normal
-                + 3 - High
-        + description (string, optional)
-        + type: Service type id (number, required)
-        + files (array, optional) - files to upload
+        + point (number, required)
+        + comment (string, optional)
         
 + Response 200
+
+### Upload & Store Files [POST /storeFiles/{id}]
++ Parameters
+    + id (number, required) - Service Request's id
+    
++ Request (application/json)
+    + Attributes
+        + files (array, required)
+        
++ Response 200
+
+### Delete an Uploaded File [DELETE /deleteFiles/{id}]
++ Parameters
+    + id (number, required) - File'id
+
++ Response 200
+
 
 ## OAuth Token [/oauth/token]
 
