@@ -308,10 +308,36 @@ View current logged user profile
 
 + Response 200
 
-## Service Request* [/service/request]
+## Service Request [/service/request]
 
 ### Service Request List [GET]
-Under maintenance
++ Response 200
+
+### Create New Service Request [POST]
++ Request (application/json)
+
+    + Attributes
+        + belongs_to: (enum[string], required) - Owner type of the Service Request
+            + Default: manager
+            + Members:
+                + manager
+                + vendor
+                + user
+        + belongs_to_id (number, required) - Owner id
+        + available_datetime: 12/01/2017 12:30 AM (string, optional) - Available date & time format d/m/Y h:i A
+        + due_date: 12/01/2017 (string, optional) - Due date e.g format d/m/Y
+        + title (string, required)
+        + property_id (number, required) - Property id
+        + priority: (enum[number], required)
+            + Default: 1
+            + Members:
+                + 1 - Low
+                + 2 - Normal
+                + 3 - High
+        + description (string, optional)
+        + type: Service type id (number, required)
+        + files (array, optional) - files to upload
+        
 + Response 200
 
 ## OAuth Token [/oauth/token]
@@ -377,7 +403,7 @@ Application issues short-lived access tokens, users will need to refresh their a
             "hint": "Cannot decrypt the refresh token"
         }
         
-## Vacancy [/vacancy]
+## Vacancy* [/vacancy]
 ### Vacancy List [GET]
 Under Maintenance
 
