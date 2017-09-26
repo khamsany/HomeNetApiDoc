@@ -338,7 +338,90 @@ View current logged user profile
 ## Service Request [/service/request]
         
 ### List [GET]
-+ Response 200
++ Request
+    + Attributes
+        + page (number, optional) - page number navigation
+        + limit (number, optional) - record limit per page
+        + sort_by (string, optional) - sorting column name
+        + sort (string, optional) - direction of sorting e.g asc, desc
+        + query (string, optional) - search text
+        + filter_manager_id (number, optional) - when in user state, this parameter is to filter the manager
+        + status (enum[number], optional)
+        + priority (enum[number], optional)
+            + Members
+                + 1 - Low
+                + 2 - Normal
+                + 3 - High
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": 6,
+                    "title": "Bill,' thought Alice,) 'Well, I should think it.",
+                    "type": 6,
+                    "description": "I then? Tell me that first, and then, if I like being that person, I'll come up: if not, I'll stay down here till I'm somebody else\"--but, oh dear!' cried Alice, with a sudden burst of tears, 'I do wish they WOULD put their heads down! I am so VERY tired of being all alone here!' As she said this she looked down at her feet, they seemed to be almost out of sight, they were getting so far off). 'Oh, my poor little feet, I wonder who will put on your shoes and stockings for you now, dears? I'm.",
+                    "priority": 2,
+                    "status": 2,
+                    "belongs_to": "manager",
+                    "belongs_to_id": 1,
+                    "property_id": 211,
+                    "due_date": "2017-11-09",
+                    "available_datetime": "2017-10-29 03:48:04",
+                    "rating_id": null,
+                    "owner_type": "user",
+                    "owner_id": 29,
+                    "created_at": "2017-09-26 03:48:04",
+                    "updated_at": "2017-09-26 03:48:04",
+                    "deleted_at": null,
+                    "created_by": 29,
+                    "updated_by": 29,
+                    "deleted_by": null,
+                    "rating": null,
+                    "assignee": {
+                        "id": 1,
+                        "name": "Millennium @ Technology Park",
+                        "property_name": "Millennium @ Technology Park",
+                        "description": "Developer test suite",
+                        "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                        "zipcode": "57000",
+                        "lng": "101.68871500",
+                        "lat": "3.04764200",
+                        "created_by": 1,
+                        "updated_by": null,
+                        "created_at": null,
+                        "updated_at": null
+                    },
+                    "user": {
+                        "id": 29,
+                        "name": "Corene Sauer",
+                        "nickname": null,
+                        "email": "user-0016@millenium.com",
+                        "facebook_id": null,
+                        "google_id": null,
+                        "avatar": "http://homenet.app/metro/pages/img/avatars/team1.jpg",
+                        "register_as": null,
+                        "phone1": null,
+                        "phone2": null,
+                        "mobile": null,
+                        "active": null,
+                        "created_at": null,
+                        "updated_at": null
+                    }
+                }
+            ],
+            "meta": {
+                "pagination": {
+                    "total": 9,
+                    "count": 9,
+                    "per_page": 20,
+                    "current_page": 1,
+                    "total_pages": 1,
+                    "links": []
+                }
+            }
+        }
 
 ### Create [POST]
 
@@ -346,7 +429,7 @@ View current logged user profile
       + Attributes (ServiceRequestModel)  
 + Response 200
 
-### Update [PUT /{id}]
+### Update [PUT /service/request/{id}]
 
 + Parameters
     + id (number, required) - Service Request's id
@@ -356,14 +439,14 @@ View current logged user profile
 
 + Response 200
 
-### Delete [DELETE /{id}]
+### Delete [DELETE /service/request/{id}]
 
 + Parameters
     + id (number, required) - Service Request's id
 
 + Response 200
 
-### Add Comment [POST /comment/{id}]
+### Add Comment [POST /service/request/comment/{id}]
 
 + Parameters
     + id (number, required) - Service Request's id
@@ -374,7 +457,7 @@ View current logged user profile
     
 + Response 200
 
-### Add Rating [POST /rating/{id}]
+### Add Rating [POST /service/request/rating/{id}]
 
 + Parameters
     + id (number, required) - Service Request's id
@@ -386,7 +469,7 @@ View current logged user profile
         
 + Response 200
 
-### Upload & Store Files [POST /storeFiles/{id}]
+### Upload & Store Files [POST /service/request/storeFiles/{id}]
 + Parameters
     + id (number, required) - Service Request's id
     
@@ -396,7 +479,7 @@ View current logged user profile
         
 + Response 200
 
-### Delete an Uploaded File [DELETE /deleteFiles/{id}]
+### Delete an Uploaded File [DELETE /service/request/deleteFiles/{id}]
 + Parameters
     + id (number, required) - File'id
 
