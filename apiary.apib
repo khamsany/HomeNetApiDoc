@@ -439,6 +439,100 @@ View current logged user profile
             "9": "Mover",
             "15": "Others"
         }
+
+### Service Type Assignees [GET /service/request/providers]
++ Response 200 (application/json)
+
+        [
+            {
+            "name": "Vendor",
+            "value": "vendor"
+            }
+        ]
+
+### Service Vendors [GET /service/request/vendors/{type_id}]
++ Parameters 
+    + type_id (number, required) - Service request type id
+
++ Response 200 (application/json)
+        
+        [
+            {
+                "id": 25,
+                "name": "Adams Ltd",
+                "description": "Dolores accusamus molestiae reiciendis numquam. Cum est voluptas qui et sed dolores. Sapiente nobis rerum illo a. Porro enim atque necessitatibus numquam et.",
+                "start_day": "",
+                "end_day": "",
+                "start_time": "",
+                "end_time": "",
+                "address": "Ipoh, Perak",
+                "zipcode": "",
+                "phone1": "(54) 3119-7658",
+                "phone2": "",
+                "fax": "",
+                "mobile": "",
+                "lng": "101.09010600",
+                "lat": "4.59747900",
+                "radius": 45,
+                "created_at": "2017-09-26 03:48:18",
+                "updated_at": "2017-09-26 03:48:18",
+                "deleted_at": "",
+                "created_by": "",
+                "updated_by": "",
+                "deleted_by": "",
+                "vendor_id": 25,
+                "category_id": 1
+            }
+        ]
+        
+### Service Properties [GET /service/request/properties/{assignee}]
++ Parameters
+    + assignee: vendor (string, required) - vendor or manager
++ Response 200 (application/json)
+    
+        [
+            {
+                "id": 250,
+                "name": "Millennium @ Technology Park",
+                "belongs_to": "user",
+                "belongs_to_id": 2,
+                "ownership": "landlord",
+                "unit_number": "A-05-04",
+                "registered_property_id": 1,
+                "description": "Millennium @ Technology Park unit property",
+                "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                "zipcode": "57000",
+                "bedroom_nos": 3,
+                "bathroom_nos": 2,
+                "parking_nos": 2,
+                "floor_nos": 1,
+                "size": 1300,
+                "size_unit": "sf",
+                "type": null,
+                "lng": "101.68871500",
+                "lat": "3.04764200",
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 2,
+                "updated_by": 2,
+                "deleted_by": null,
+                "registered_property": {
+                    "id": 1,
+                    "name": "Millennium @ Technology Park",
+                    "property_name": "Millennium @ Technology Park",
+                    "description": "Developer test suite",
+                    "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                    "zipcode": "57000",
+                    "lng": "101.68871500",
+                    "lat": "3.04764200",
+                    "created_by": 1,
+                    "updated_by": null,
+                    "created_at": null,
+                    "updated_at": null
+                }
+            }
+        ]
         
 ### Create [POST]
 
