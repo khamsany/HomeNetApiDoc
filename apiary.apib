@@ -421,6 +421,51 @@ Strictly for manager only
                 "links": []
             }
         }
+
+### Types [GET /report/incident/types{?manager_id}]
+Get options of incident type
++ Parameters
+    + manager_id (number, optional) - if not specified it will load all available
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Other",
+                "description": null,
+                "manager_id": 1,
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 2,
+                "updated_by": 14,
+                "deleted_by": null
+            },
+            {
+                "id": 2,
+                "name": "Property Damage",
+                "description": null,
+                "manager_id": 1,
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 2,
+                "updated_by": 4,
+                "deleted_by": null
+            },
+            {
+                "id": 3,
+                "name": "Injury",
+                "description": null,
+                "manager_id": 1,
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 3,
+                "updated_by": 1,
+                "deleted_by": null
+            }
+        ]
         
 ### Create [POST]
 + Attributes (IncidentReportModel)
@@ -899,7 +944,7 @@ Under Maintenance
 
 + Response 200
 
-## User[/user]
+## User [/user]
 
 ### residency properties [GET /user/resident/properties{?manager_id}]
 to get all user residency properties
