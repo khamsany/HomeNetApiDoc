@@ -47,6 +47,11 @@ All Reference with * at the end is still under maintenance
         + 3 - High
 + request_note (string, optional)
 
+## AnnouncementModel
++ subject (string, required) - subject
++ text (string, required) - body of the announcement
++ submitType (number, optional) - if you like to create/edit and publish please set submitType = 2
+
 ## PaginationAttr
 + page (number, optional) - page number navigation
 + limit (number, optional) - record limit per page
@@ -74,7 +79,7 @@ Under Maintenance
 
 ## Announcement [/announcement]
     
-### Announcement List [GET]
+### List [GET]
 Get announcement list
 
 + Request
@@ -112,7 +117,7 @@ Get announcement list
             }
         }
         
-### Announcement Details [GET /{id}]
+### Details [GET /{id}]
 Get announcement details
 
 + Parameters
@@ -142,6 +147,32 @@ Get announcement details
             "sent_by": 540,
             "sent_at": "2017-09-19 05:02:15"
         }
+        
+### Create [POST]
+To create new announcement - stricly for manager view state only
++ Request
+    + Attributes (AnnouncementModel)
++ Response 200 (application/json)
+
+### Update [PUT /announcement/{id}]
+To update an announcement
++ Parameters
+    + id (number, required) - announcement id
++ Request
+    + Attributes (AnnouncementModel)
++ Response 200 (application/json)
+
+### Publish [PATCH /announcement/publish/{id}]
+To publish an announcement
++ Parameters
+    + id (number, required) - announcement id
++ Response 200 (application/json)
+
+### Delete [DELETE /anouncement/{id}]
+To delete an announcement
++ Parameters
+    + id (number, required) - announcement id
++ Response 200 (application/json)
 
 ## Facility* [/facility]
 ### Facility List [GET]
