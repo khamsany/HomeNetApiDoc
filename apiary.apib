@@ -33,6 +33,39 @@ All Reference with * at the end is still under maintenance
 ## CommentModel
 + text (string, required)
 
+## BookingModel
++ start_date (string, optional) - Format d/m/Y  e.g 01/11/2017
++ start_time (string, optional) - Format h:i A e.g 02:55 AM
++ manager_id: 1 (number, required)
++ facility_id: 1 (number, required)
++ residence_id (number, required)
++ priority (enum[number], required)
+    + Default: 1
+    + Members
+        + 1 - Low
+        + 2 - Normal
+        + 3 - High
++ request_note (string, optional)
+
+## PaginationAttr
++ page (number, optional) - page number navigation
++ limit (number, optional) - record limit per page
++ sort_by (string, optional) - sorting column name
++ sort (string, optional) - direction of sorting e.g asc, desc
++ query (string, optional) - search text
+        
+## IncidentReportModel
++ manager_id (number, required)
++ files (array, optional)
++ title (string, required)
++ description (string, required)
++ priority (enum[number], required)
+    + Default: 1
+    + Members
+        + 1 - Low
+        + 2 - Normal
+        + 3 - High
+
 ## Activity* [/activity]
 ### Activity List [GET]
 Under Maintenance
@@ -45,12 +78,7 @@ Under Maintenance
 Get announcement list
 
 + Request
-    + Attributes
-        + page (number, optional) - page number navigation
-        + limit (number, optional) - record limit per page
-        + sort_by (string, optional) - sorting column name
-        + sort (string, optional) - direction of sorting e.g asc, desc
-        + query (string, optional) - search text
+    + Attributes (PaginationAttr)
 
 + Response 200 (application/json)
 
@@ -122,9 +150,36 @@ Under Maintenance
 + Response 200
 
 ## Facility Booking [/booking]
-### Facility Booking List [GET]
+### List [GET /facilities{?manager_id}}]
+
++ Parameters
+    + manager_id: 1 (number, required)
+
++ Response 200 (application/json)
+    
+        [
+            {
+                "id": 1,
+                "manager_id": 1,
+                "name": "Futsal",
+                "description": null,
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 4,
+                "updated_by": 34,
+                "deleted_by": null
+            }
+        ]
+    
+### Facility Booking List [GET /booking{?manager_id,status,priority}]
 Get Booking List for Management / Resident base on view state
 
++ Parameters
+    + manager_id (number, optional)
+    + status (number, optional)
+    + priority (number, optional)
+    
 + Request
     + Attributes
         + page (number, optional) - page number navigation
@@ -226,11 +281,188 @@ Get Booking List for Management / Resident base on view state
             }
         }
 
-## Incident Report* [/report/incident]
-### Incident Report List [GET]
-Under Maintenance
+### Create [POST]
+
++ Request
+    + Attributes (BookingModel)
 
 + Response 200
+
+### Delete [DELETE /booking/{id}]
+
++ Parameters
+    + id (number, required) - Booking Id
+
++ Response 200
+
+### Status Update [PUT /booking/status/{id}]
+Strictly for manager only
++ Parameters
+    + id (number, required) - Booking Id
+
++ Attributes
+    + status (number, required) - Booking status id
+
++ Response 200
+
+## Incident Report [/report/incident]
+### List [GET /report/incident{?manager_id,status,priority}]
+
++ Parameters 
+    + manager_id (number, optional) - stricly use in user view state only
+    + status (number, optional)
+    + priority (number, optional)
+    
++ Attributes (PaginationAttr)
+
++ Response 200 (application/json)
+
+        {
+        "data": [
+            {
+                "id": 1,
+                "incident_id": 3,
+                "title": "Mock Turtle in the pool.",
+                "description": "For anything tougher than suet; Yet you finished the goose, with the other side. The further off from England the nearer is to France--.",
+                "priority": 1,
+                "status": 1,
+                "manager_id": 1,
+                "residence_id": 69,
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 4,
+                "updated_by": 7,
+                "deleted_by": null,
+                "manager": {
+                    "id": 1,
+                    "name": "Millennium @ Technology Park",
+                    "property_name": "Millennium @ Technology Park",
+                    "description": "Developer test suite",
+                    "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                    "zipcode": "57000",
+                    "lng": "101.68871500",
+                    "lat": "3.04764200",
+                    "created_by": 1,
+                    "updated_by": null,
+                    "created_at": null,
+                    "updated_at": null
+                },
+                "residence": {
+                    "id": 69,
+                    "manager_id": 1,
+                    "user_id": 28,
+                    "name": "Katrine Dibbert",
+                    "phone": null,
+                    "mobile": null,
+                    "email": "user-0015@millenium.com",
+                    "user_linked_at": "2017-09-26 03:44:38",
+                    "user_linked_by": null,
+                    "created_at": "2017-09-26 03:44:38",
+                    "updated_at": "2017-09-26 03:44:38",
+                    "deleted_at": null,
+                    "created_by": null,
+                    "updated_by": null,
+                    "deleted_by": null,
+                    "user": {
+                        "id": 28,
+                        "name": "Katrine Dibbert",
+                        "nickname": null,
+                        "email": "user-0015@millenium.com",
+                        "facebook_id": null,
+                        "google_id": null,
+                        "avatar": "http://homenet.app/metro/pages/img/avatars/team7.jpg",
+                        "register_as": null,
+                        "phone1": null,
+                        "phone2": null,
+                        "mobile": null,
+                        "active": null,
+                        "created_at": null,
+                        "updated_at": null
+                    }
+                },
+                "incident": {
+                    "id": 3,
+                    "name": "Injury",
+                    "description": null,
+                    "manager_id": 1,
+                    "created_at": "2017-09-26 03:44:39",
+                    "updated_at": "2017-09-26 03:44:39",
+                    "deleted_at": null,
+                    "created_by": 3,
+                    "updated_by": 1,
+                    "deleted_by": null
+                },
+                "user": {
+                    "id": 4,
+                    "name": "Hassan Reyhanipour",
+                    "nickname": null,
+                    "email": "hassan@hexosys.com",
+                    "facebook_id": null,
+                    "google_id": null,
+                    "avatar": "http://homenet.app/metro/pages/img/avatars/team8.jpg",
+                    "register_as": "manager",
+                    "phone1": null,
+                    "phone2": null,
+                    "mobile": null,
+                    "active": 1,
+                    "created_at": null,
+                    "updated_at": null
+                }
+            }
+            ],
+            "meta": {
+            "pagination": {
+                "total": 14,
+                "count": 14,
+                "per_page": 20,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+        
+### Create [POST]
++ Attributes (IncidentReportModel)
++ Response 200
+
+### Update [PUT]
++ Attributes (IncidentReportModel)
+    + status (number, optional) - strictly use for appropriate user/manager to update status
++ Response 200 (application/json)
+
+### Delete [DELETE /report/incident/{id}]
++ Parameters
+    + id (number, required) - the report id
++ Response 200 (application/json)
+
+### Comments [GET /report/incident/comments/{id}]
+Get comments of the report
++ Parameters
+    + id (number, required) - the report id
++ Response 200 (application/json)
+
+### Add Comment [POST /report/incident/comment/{id}]
+Add comments to the report
++ Parameters
+    + id (number, required) - The report id
++ Attribute
+    + text (string, required)
++ Response 200 (application/json)
+
+### Images upload [POST /report/incident/upload/{id}]
+To upload files
++ Parameters 
+    + id (number, required) - The report id
++ Attributes
+    + files (array, required) - Array of file
++ Response 200 (application/json)
+
+### Delete Image [DELETE /report/incident/image/{id}/{image_id}]
++ Parameters
+    + id (number, required) - The report id
+    + image_id (number, required) - The image file id
++ Response 200 (application/json)
 
 ## Neighborhood Explorer* [/explorer]
 ### Neighborhood Explorer List [GET]
@@ -325,6 +557,74 @@ View current logged user profile
             "mobile": "user_mobile",
             "avatar": "user_avatar"
         }
+        
+## OAuth Token [/oauth/token]
+
+### Request Token [POST]
+In order to get the api token, user need to authenticate with password grant (OAuth2)
+
++ Request (application/json)
+
+    + Attributes
+    
+        + grant_type: password (string, required) - OAuth grant type
+        + client_id (number, required) - The client id from system for password grant client.
+        + client_secret (string, required) - The client secret from system.
+        + username (string, required) - User's username
+        + password (string, required) - User's password
+        + scope (string) - not applicable for now just left is empty
+
++ Response 200 (application/json)
+
+        {
+            "token_type": "Bearer",
+            "expires_in": 31535999,
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA0YTdiMzQzZTNjYjY5NmNkYWY1YzQxOTNkMWU1ODA2YWJlNzZlN2RjZjNiZTRiMWYwYWE0NzAzZDQxZTNmZTY1ZTA2OTI1ZDgzNTc3NTEyIn0.eyJhdWQiOiIyIiwianRpIjoiMDRhN2IzNDNlM2NiNjk2Y2RhZjVjNDE5M2QxZTU4MDZhYmU3NmU3ZGNmM2JlNGIxZjBhYTQ3MDNkNDFlM2ZlNjVlMDY5MjVkODM1Nzc1MTIiLCJpYXQiOjE0ODE4NTc3ODcsIm5iZiI6MTQ4MTg1Nzc4NywiZXhwIjoxNTEzMzkzNzg3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Q1w2whkv2zWSvoQZ4c2ut1RZwvE18L2r3Szw6UMVgXKlyJCqtVUOE-L09ohpj3kK56pRm1MkOito0wbQ3vO-uLSMfyRgbd7yQUnwD2WYXtUGFuiFah0cA1LRJQfxZ2Oi_6V4l5QySKS2KcpDD3eIR4ggst1FVIE-z52EFCohxQezmJtl1FaLYCGoB5e1SLGBpzqVUye2GgV8yPaqmVKU0zZ-mWFv72cIUHiJNbh0M_8V1i4lSoiz5UeOp0CZuOBUVhonsLBfF-1HE7AHeQG0o_96COlk2F6m3sZAETvUM7JeN_3KcFYdPklMnqXwOPM3fmP1WjXbXLWDpi0-36U8-Zr__R86aPb9QUq7G394H3mvk_ZfHn0wAyphcaoVbBX_KVs9L5qtD7aghPnVjho44gkCwuPYu70Trp3KkHKphlG4AWuluPXGrsN_lKfqWYkrILnsDD1iUGF4wDUKYHazWcCdupdA5LEPtMNwzImYJyFsd4LJWk6kdYtQ1ncU7vg6eeZV1tP5NQtw0882ItyhhWDj-jemME0rRRJ6vFNAbiq0AiGDEnQYoxQAocusS28F4FwNPtyhsa6TwgNAlM4mGCyGKJosffiw0T68RHsocFEl5BH2twzcNtquA1z-gLWRPbuRy8MTL_dunJR-47ASj0xVjNY-a_x6bm4m3FtPZFg",
+            "refresh_token": "TuK9eaWi284r0DrRvViK8pe7E52Stn5z4uXoKo/ePHGvuA3gT9AMKQyQFHmhTt0Aj7kvRB+cKfvT+SOZAIWIjniy4u/flb6WFBvBnY2+/gYXwwyMxdkJbgcdAlpES18QZUht0iYBbBmn9IVvQwhmdggGm2Lc3WXvsw1xjPTf3xgBK+/FKu/XDRH2QTvQtAC4iELtWmjn7oFs1ARAjTgquMF5I6y1fi4/Pb3SksuJRmim6c6hz16ck+HJHJ3KwbhDMQ6qXknnHfwzq3qzBASPyb6Mg2c6wZHFrfEdKCZ8d7B+UBuh/ePP3ztkwc/pFXde3trp83lapyeepOb3oU8pyOm9ySTA4ieP7xueVieyyBPKqYmd1RZvwLXqkfSKrgDSojvhAVR4dob7DOkAwQRT55WjELmhz+ZvQPCLn4r9M8lG4P3x0O45l/96GtsCoi2bXdzDpNbL4BvFmtSDei1ccPaPXBTDvXoGqJbipyRGLXcONidSBDCW60un0eyAXIGKPm+aXaJR6IQlGMoTMIv4yXJXlPEULCKrSCJSD5lDq74WvazQnogDBYQDhp1Xk1H48qSSxz3kf7h1IL4FRBkd3Y5Gm2Kb3Wy9hSKUEYtuVIxsSRg1gh8GHVSPldZS9ZxXgPe7S3V72stoDsXtoHIsYBhR4ULvvkmfBmUMZS0pQM0="
+        }
+
++ Response 401 (application/json)
+    
+        {
+            "error": "invalid_credentials",
+            "message": "The user credentials were incorrect."
+        }
+        
+### Refresh Token [PUT]
+Application issues short-lived access tokens, users will need to refresh their access tokens via the refresh token that was provided to them when the access token was issued
+
++ Request (application/json)
+
+    + Attributes
+    
+        + grant_type: refresh_token (string, required) - OAuth grant type
+        + refresh_token: JvRR3dE7Gs3/Y7fuf6uv65jzPJoWWAiBY+fJhoysZTOtFznFcRieJTU1jCrlGVeOCbbbYnHEvk0aumaw8C6mz0sEzNWJNvolRuZRjvnvfVN180XXjOi3C/vo/62ymcGCtaDiGgqcEofvSAEoFJkegqOsMsuEh91fD/mmDybOKATUxlWO2sww7P6OXVWl1j5akGZc/FcTeTkEgP/cJdlCjPVkA9UIyoVt1aSYG0dSKYbNouh0fDFdHt9pmkmHSlG2jDE7f5rZz/Ypv6BbnoGxftYY7biQhLpIDfXMduqMnQn1q/vm3FGuchDCxC+98YhebaX9muif3yPVRBAkUl1I+e8D8/EXvw07FjJtaf/BwOklSgJ2k//uyBsFWkcMm1V9B1oepyjE11B512Pa4D0Fz+t7MU1AMYBpR+/BpDuVflnGFwIE8THL5H4wEkK2OQSQYBNNCT5yAf3zd7RTf7gay3VaeMdCxL44fyV6tT8a2yrfGzOKUHivQNORq85dB66LzVmtbyUbA+lCnh78MACb0hFzfFxtxO//OEhjG95Kjh02lmI3euztamVi/42P44J280MTqIQexJI2pLopoGoeBwg9wNgDe5QD3sfExpJNwvELwXjEbOv50LJnJ5Xc3diKH45l2vhElxZ1+XZkyu9BNbLMThk9L5zvyliTuyyAc38= (string, required) - Refresh token
+        + client_id (number, required) - The client id from system for password grant client.
+        + client_secret (string, required) - The client secret from system.
+        + scope (string) - not applicable for now just left is empty
+
++ Response 200 (application/json)
+
+        {
+            "token_type": "Bearer",
+            "expires_in": 31535999,
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA0YTdiMzQzZTNjYjY5NmNkYWY1YzQxOTNkMWU1ODA2YWJlNzZlN2RjZjNiZTRiMWYwYWE0NzAzZDQxZTNmZTY1ZTA2OTI1ZDgzNTc3NTEyIn0.eyJhdWQiOiIyIiwianRpIjoiMDRhN2IzNDNlM2NiNjk2Y2RhZjVjNDE5M2QxZTU4MDZhYmU3NmU3ZGNmM2JlNGIxZjBhYTQ3MDNkNDFlM2ZlNjVlMDY5MjVkODM1Nzc1MTIiLCJpYXQiOjE0ODE4NTc3ODcsIm5iZiI6MTQ4MTg1Nzc4NywiZXhwIjoxNTEzMzkzNzg3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Q1w2whkv2zWSvoQZ4c2ut1RZwvE18L2r3Szw6UMVgXKlyJCqtVUOE-L09ohpj3kK56pRm1MkOito0wbQ3vO-uLSMfyRgbd7yQUnwD2WYXtUGFuiFah0cA1LRJQfxZ2Oi_6V4l5QySKS2KcpDD3eIR4ggst1FVIE-z52EFCohxQezmJtl1FaLYCGoB5e1SLGBpzqVUye2GgV8yPaqmVKU0zZ-mWFv72cIUHiJNbh0M_8V1i4lSoiz5UeOp0CZuOBUVhonsLBfF-1HE7AHeQG0o_96COlk2F6m3sZAETvUM7JeN_3KcFYdPklMnqXwOPM3fmP1WjXbXLWDpi0-36U8-Zr__R86aPb9QUq7G394H3mvk_ZfHn0wAyphcaoVbBX_KVs9L5qtD7aghPnVjho44gkCwuPYu70Trp3KkHKphlG4AWuluPXGrsN_lKfqWYkrILnsDD1iUGF4wDUKYHazWcCdupdA5LEPtMNwzImYJyFsd4LJWk6kdYtQ1ncU7vg6eeZV1tP5NQtw0882ItyhhWDj-jemME0rRRJ6vFNAbiq0AiGDEnQYoxQAocusS28F4FwNPtyhsa6TwgNAlM4mGCyGKJosffiw0T68RHsocFEl5BH2twzcNtquA1z-gLWRPbuRy8MTL_dunJR-47ASj0xVjNY-a_x6bm4m3FtPZFg",
+            "refresh_token": "TuK9eaWi284r0DrRvViK8pe7E52Stn5z4uXoKo/ePHGvuA3gT9AMKQyQFHmhTt0Aj7kvRB+cKfvT+SOZAIWIjniy4u/flb6WFBvBnY2+/gYXwwyMxdkJbgcdAlpES18QZUht0iYBbBmn9IVvQwhmdggGm2Lc3WXvsw1xjPTf3xgBK+/FKu/XDRH2QTvQtAC4iELtWmjn7oFs1ARAjTgquMF5I6y1fi4/Pb3SksuJRmim6c6hz16ck+HJHJ3KwbhDMQ6qXknnHfwzq3qzBASPyb6Mg2c6wZHFrfEdKCZ8d7B+UBuh/ePP3ztkwc/pFXde3trp83lapyeepOb3oU8pyOm9ySTA4ieP7xueVieyyBPKqYmd1RZvwLXqkfSKrgDSojvhAVR4dob7DOkAwQRT55WjELmhz+ZvQPCLn4r9M8lG4P3x0O45l/96GtsCoi2bXdzDpNbL4BvFmtSDei1ccPaPXBTDvXoGqJbipyRGLXcONidSBDCW60un0eyAXIGKPm+aXaJR6IQlGMoTMIv4yXJXlPEULCKrSCJSD5lDq74WvazQnogDBYQDhp1Xk1H48qSSxz3kf7h1IL4FRBkd3Y5Gm2Kb3Wy9hSKUEYtuVIxsSRg1gh8GHVSPldZS9ZxXgPe7S3V72stoDsXtoHIsYBhR4ULvvkmfBmUMZS0pQM0="
+        }
+
++ Response 400 (application/json)
+    
+        {
+            "error": "invalid_request",
+            "message": "The refresh token is invalid.",
+            "hint": "Cannot decrypt the refresh token"
+        }
+        
+## Vacancy* [/vacancy]
+### Vacancy List [GET]
+Under Maintenance
+
++ Response 200
 
 ## Repository [/repository]
 
@@ -599,75 +899,15 @@ View current logged user profile
 
 + Response 200
 
+## User[/user]
 
-## OAuth Token [/oauth/token]
+### residency properties [GET /user/resident/properties{?manager_id}]
+to get all user residency properties
 
-### Request Token [POST]
-In order to get the api token, user need to authenticate with password grant (OAuth2)
-
-+ Request (application/json)
-
-    + Attributes
-    
-        + grant_type: password (string, required) - OAuth grant type
-        + client_id (number, required) - The client id from system for password grant client.
-        + client_secret (string, required) - The client secret from system.
-        + username (string, required) - User's username
-        + password (string, required) - User's password
-        + scope (string) - not applicable for now just left is empty
-
++ Parameters
+    + manager_id (number, optional)
 + Response 200 (application/json)
 
-        {
-            "token_type": "Bearer",
-            "expires_in": 31535999,
-            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA0YTdiMzQzZTNjYjY5NmNkYWY1YzQxOTNkMWU1ODA2YWJlNzZlN2RjZjNiZTRiMWYwYWE0NzAzZDQxZTNmZTY1ZTA2OTI1ZDgzNTc3NTEyIn0.eyJhdWQiOiIyIiwianRpIjoiMDRhN2IzNDNlM2NiNjk2Y2RhZjVjNDE5M2QxZTU4MDZhYmU3NmU3ZGNmM2JlNGIxZjBhYTQ3MDNkNDFlM2ZlNjVlMDY5MjVkODM1Nzc1MTIiLCJpYXQiOjE0ODE4NTc3ODcsIm5iZiI6MTQ4MTg1Nzc4NywiZXhwIjoxNTEzMzkzNzg3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Q1w2whkv2zWSvoQZ4c2ut1RZwvE18L2r3Szw6UMVgXKlyJCqtVUOE-L09ohpj3kK56pRm1MkOito0wbQ3vO-uLSMfyRgbd7yQUnwD2WYXtUGFuiFah0cA1LRJQfxZ2Oi_6V4l5QySKS2KcpDD3eIR4ggst1FVIE-z52EFCohxQezmJtl1FaLYCGoB5e1SLGBpzqVUye2GgV8yPaqmVKU0zZ-mWFv72cIUHiJNbh0M_8V1i4lSoiz5UeOp0CZuOBUVhonsLBfF-1HE7AHeQG0o_96COlk2F6m3sZAETvUM7JeN_3KcFYdPklMnqXwOPM3fmP1WjXbXLWDpi0-36U8-Zr__R86aPb9QUq7G394H3mvk_ZfHn0wAyphcaoVbBX_KVs9L5qtD7aghPnVjho44gkCwuPYu70Trp3KkHKphlG4AWuluPXGrsN_lKfqWYkrILnsDD1iUGF4wDUKYHazWcCdupdA5LEPtMNwzImYJyFsd4LJWk6kdYtQ1ncU7vg6eeZV1tP5NQtw0882ItyhhWDj-jemME0rRRJ6vFNAbiq0AiGDEnQYoxQAocusS28F4FwNPtyhsa6TwgNAlM4mGCyGKJosffiw0T68RHsocFEl5BH2twzcNtquA1z-gLWRPbuRy8MTL_dunJR-47ASj0xVjNY-a_x6bm4m3FtPZFg",
-            "refresh_token": "TuK9eaWi284r0DrRvViK8pe7E52Stn5z4uXoKo/ePHGvuA3gT9AMKQyQFHmhTt0Aj7kvRB+cKfvT+SOZAIWIjniy4u/flb6WFBvBnY2+/gYXwwyMxdkJbgcdAlpES18QZUht0iYBbBmn9IVvQwhmdggGm2Lc3WXvsw1xjPTf3xgBK+/FKu/XDRH2QTvQtAC4iELtWmjn7oFs1ARAjTgquMF5I6y1fi4/Pb3SksuJRmim6c6hz16ck+HJHJ3KwbhDMQ6qXknnHfwzq3qzBASPyb6Mg2c6wZHFrfEdKCZ8d7B+UBuh/ePP3ztkwc/pFXde3trp83lapyeepOb3oU8pyOm9ySTA4ieP7xueVieyyBPKqYmd1RZvwLXqkfSKrgDSojvhAVR4dob7DOkAwQRT55WjELmhz+ZvQPCLn4r9M8lG4P3x0O45l/96GtsCoi2bXdzDpNbL4BvFmtSDei1ccPaPXBTDvXoGqJbipyRGLXcONidSBDCW60un0eyAXIGKPm+aXaJR6IQlGMoTMIv4yXJXlPEULCKrSCJSD5lDq74WvazQnogDBYQDhp1Xk1H48qSSxz3kf7h1IL4FRBkd3Y5Gm2Kb3Wy9hSKUEYtuVIxsSRg1gh8GHVSPldZS9ZxXgPe7S3V72stoDsXtoHIsYBhR4ULvvkmfBmUMZS0pQM0="
-        }
-
-+ Response 401 (application/json)
-    
-        {
-            "error": "invalid_credentials",
-            "message": "The user credentials were incorrect."
-        }
-
-
-### Refresh Token [PUT]
-Application issues short-lived access tokens, users will need to refresh their access tokens via the refresh token that was provided to them when the access token was issued
-
-+ Request (application/json)
-
-    + Attributes
-    
-        + grant_type: refresh_token (string, required) - OAuth grant type
-        + refresh_token: JvRR3dE7Gs3/Y7fuf6uv65jzPJoWWAiBY+fJhoysZTOtFznFcRieJTU1jCrlGVeOCbbbYnHEvk0aumaw8C6mz0sEzNWJNvolRuZRjvnvfVN180XXjOi3C/vo/62ymcGCtaDiGgqcEofvSAEoFJkegqOsMsuEh91fD/mmDybOKATUxlWO2sww7P6OXVWl1j5akGZc/FcTeTkEgP/cJdlCjPVkA9UIyoVt1aSYG0dSKYbNouh0fDFdHt9pmkmHSlG2jDE7f5rZz/Ypv6BbnoGxftYY7biQhLpIDfXMduqMnQn1q/vm3FGuchDCxC+98YhebaX9muif3yPVRBAkUl1I+e8D8/EXvw07FjJtaf/BwOklSgJ2k//uyBsFWkcMm1V9B1oepyjE11B512Pa4D0Fz+t7MU1AMYBpR+/BpDuVflnGFwIE8THL5H4wEkK2OQSQYBNNCT5yAf3zd7RTf7gay3VaeMdCxL44fyV6tT8a2yrfGzOKUHivQNORq85dB66LzVmtbyUbA+lCnh78MACb0hFzfFxtxO//OEhjG95Kjh02lmI3euztamVi/42P44J280MTqIQexJI2pLopoGoeBwg9wNgDe5QD3sfExpJNwvELwXjEbOv50LJnJ5Xc3diKH45l2vhElxZ1+XZkyu9BNbLMThk9L5zvyliTuyyAc38= (string, required) - Refresh token
-        + client_id (number, required) - The client id from system for password grant client.
-        + client_secret (string, required) - The client secret from system.
-        + scope (string) - not applicable for now just left is empty
-
-+ Response 200 (application/json)
-
-        {
-            "token_type": "Bearer",
-            "expires_in": 31535999,
-            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA0YTdiMzQzZTNjYjY5NmNkYWY1YzQxOTNkMWU1ODA2YWJlNzZlN2RjZjNiZTRiMWYwYWE0NzAzZDQxZTNmZTY1ZTA2OTI1ZDgzNTc3NTEyIn0.eyJhdWQiOiIyIiwianRpIjoiMDRhN2IzNDNlM2NiNjk2Y2RhZjVjNDE5M2QxZTU4MDZhYmU3NmU3ZGNmM2JlNGIxZjBhYTQ3MDNkNDFlM2ZlNjVlMDY5MjVkODM1Nzc1MTIiLCJpYXQiOjE0ODE4NTc3ODcsIm5iZiI6MTQ4MTg1Nzc4NywiZXhwIjoxNTEzMzkzNzg3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Q1w2whkv2zWSvoQZ4c2ut1RZwvE18L2r3Szw6UMVgXKlyJCqtVUOE-L09ohpj3kK56pRm1MkOito0wbQ3vO-uLSMfyRgbd7yQUnwD2WYXtUGFuiFah0cA1LRJQfxZ2Oi_6V4l5QySKS2KcpDD3eIR4ggst1FVIE-z52EFCohxQezmJtl1FaLYCGoB5e1SLGBpzqVUye2GgV8yPaqmVKU0zZ-mWFv72cIUHiJNbh0M_8V1i4lSoiz5UeOp0CZuOBUVhonsLBfF-1HE7AHeQG0o_96COlk2F6m3sZAETvUM7JeN_3KcFYdPklMnqXwOPM3fmP1WjXbXLWDpi0-36U8-Zr__R86aPb9QUq7G394H3mvk_ZfHn0wAyphcaoVbBX_KVs9L5qtD7aghPnVjho44gkCwuPYu70Trp3KkHKphlG4AWuluPXGrsN_lKfqWYkrILnsDD1iUGF4wDUKYHazWcCdupdA5LEPtMNwzImYJyFsd4LJWk6kdYtQ1ncU7vg6eeZV1tP5NQtw0882ItyhhWDj-jemME0rRRJ6vFNAbiq0AiGDEnQYoxQAocusS28F4FwNPtyhsa6TwgNAlM4mGCyGKJosffiw0T68RHsocFEl5BH2twzcNtquA1z-gLWRPbuRy8MTL_dunJR-47ASj0xVjNY-a_x6bm4m3FtPZFg",
-            "refresh_token": "TuK9eaWi284r0DrRvViK8pe7E52Stn5z4uXoKo/ePHGvuA3gT9AMKQyQFHmhTt0Aj7kvRB+cKfvT+SOZAIWIjniy4u/flb6WFBvBnY2+/gYXwwyMxdkJbgcdAlpES18QZUht0iYBbBmn9IVvQwhmdggGm2Lc3WXvsw1xjPTf3xgBK+/FKu/XDRH2QTvQtAC4iELtWmjn7oFs1ARAjTgquMF5I6y1fi4/Pb3SksuJRmim6c6hz16ck+HJHJ3KwbhDMQ6qXknnHfwzq3qzBASPyb6Mg2c6wZHFrfEdKCZ8d7B+UBuh/ePP3ztkwc/pFXde3trp83lapyeepOb3oU8pyOm9ySTA4ieP7xueVieyyBPKqYmd1RZvwLXqkfSKrgDSojvhAVR4dob7DOkAwQRT55WjELmhz+ZvQPCLn4r9M8lG4P3x0O45l/96GtsCoi2bXdzDpNbL4BvFmtSDei1ccPaPXBTDvXoGqJbipyRGLXcONidSBDCW60un0eyAXIGKPm+aXaJR6IQlGMoTMIv4yXJXlPEULCKrSCJSD5lDq74WvazQnogDBYQDhp1Xk1H48qSSxz3kf7h1IL4FRBkd3Y5Gm2Kb3Wy9hSKUEYtuVIxsSRg1gh8GHVSPldZS9ZxXgPe7S3V72stoDsXtoHIsYBhR4ULvvkmfBmUMZS0pQM0="
-        }
-
-+ Response 400 (application/json)
-    
-        {
-            "error": "invalid_request",
-            "message": "The refresh token is invalid.",
-            "hint": "Cannot decrypt the refresh token"
-        }
-        
-## Vacancy* [/vacancy]
-### Vacancy List [GET]
-Under Maintenance
-
-+ Response 200
 
 ## View State [/viewstate]
 Account view state management purpose
