@@ -519,6 +519,46 @@ Strictly for manager only
             }
         }
 
+### Details [GET /report/incident/{id}]
++ Parameters
+    + id (number, required) - manager id
+    
++ Response 200 (application/json)
+        
+        {
+            "id": 1,
+            "incident_id": 3,
+            "title": "Mock Turtle in the pool.",
+            "description": "For anything tougher than suet; Yet you finished the goose, with the other side. The further off from England the nearer is to France--.",
+            "priority": 1,
+            "status": 1,
+            "manager_id": 1,
+            "residence_id": 69,
+            "created_at": "2017-09-26 03:44:39",
+            "updated_at": "2017-09-26 03:44:39",
+            "deleted_at": null,
+            "created_by": 4,
+            "updated_by": 7,
+            "deleted_by": null,
+            "residence": {
+                "id": 69,
+                "manager_id": 1,
+                "user_id": 28,
+                "name": "Katrine Dibbert",
+                "phone": null,
+                "mobile": null,
+                "email": "user-0015@millenium.com",
+                "user_linked_at": "2017-09-26 03:44:38",
+                "user_linked_by": null,
+                "created_at": "2017-09-26 03:44:38",
+                "updated_at": "2017-09-26 03:44:38",
+                "deleted_at": null,
+                "created_by": null,
+                "updated_by": null,
+                "deleted_by": null
+            }
+        }
+        
 ### Types [GET /report/incident/types{?manager_id}]
 Get options of incident type
 + Parameters
@@ -699,6 +739,52 @@ View current logged user profile
             "mobile": "user_mobile",
             "avatar": "user_avatar"
         }
+
+### Fetch User Property [POST /property/my]
++ Request
+    + Attributes
+        + user_id (number, required)
+
++ Response 200
+
+### Fetch User Vendor [POST /vendor/my]
++ Request
+    + Attributes
+        + user_id (number, required)
+
++ Response 200
+
+### Fetch User Manager [POST /manager/findAll]
++ Request
+    + Attributes
+        + user_id (number, required)
+
++ Response 200
+
+### Update User Profile [PATCH /profile/{user_id}]
++ Request
+    + Attributes
+        + id (number, required)
+        + name (string, required)
+        + nickname
+        + phone1
+        + mobile
++ Response 200
+
+### Update User Password [PATCH /profile/{id}]
++ Request
+    + Attributes
+        + oldpassword (string, required)
+        + password (string, required)
+        + repassword (string, required)
++ Response 200
+
+### Update User Image [POST /profile/upload/{id}]
++ Request
+    + Attributes
+        + profileimage (string, required)
++ Response 200
+
         
 ## OAuth Token [/oauth/token]
 
@@ -774,6 +860,34 @@ Under Maintenance
 + Parameters
     + manager_id: manager id (number, optional) - When view state is "Manager" this will be ignore
     + withFiles: to attach with files (boolean, optional) - set to 1 if you require list to be attached in the list together
+
++ Response 200
+
+### Repository Create Folder [POST]
++ Request
+    + Attributes
+        + manager_id (number, required): manager id 
+        + name (string, required)
+        + description (string, optional)
+
++ Response 200
+
+### Repository Create File [POST /repository/storeFiles/{repository_id}]
++ Request
+    + Attributes
+        + files (array, required)
+        + subject (string, required)
+        + description (string, optional)
+
++ Response 200
+
+### Repository Delete Folder [DELETE /repository/{repository_id}]
+
+
++ Response 200
+
+### Repository Delete File [DELETE /filerepository/{file_id}]
+
 
 + Response 200
 
@@ -862,6 +976,95 @@ Under Maintenance
                     "total_pages": 1,
                     "links": []
                 }
+            }
+        }
+        
+### Details [GET /service/request/{id}{?with_comment}]
++ Parameters 
+    + id (number, required) - service request id
+    + with_comment (number, optional) - if required comment just set = 1, if no need to have this parameter
+
++ Response 200 (application/json)
+
+        {
+            "id": 2,
+            "title": "I should like to see that the best cat in the.",
+            "type": 7,
+            "description": "Cat. 'I don't much care where--' said Alice. 'Then it doesn't matter which way you go,' said the Cat. '--so long as I get SOMEWHERE,' Alice added as an explanation. 'Oh, you're sure to do that,' said the Cat, 'if you only walk long enough.' Alice felt that this could not be denied, so she tried another question. 'What sort of people live about here?' 'In THAT direction,' the Cat said, waving its right paw round, 'lives a Hatter: and in THAT direction,' waving the other paw, 'lives a March.",
+            "priority": 3,
+            "status": 2,
+            "belongs_to": "manager",
+            "belongs_to_id": 1,
+            "property_id": 218,
+            "due_date": "2017-11-17",
+            "available_datetime": "2017-10-27 03:48:03",
+            "rating_id": null,
+            "owner_type": "user",
+            "owner_id": 20,
+            "created_at": "2017-09-26 03:48:03",
+            "updated_at": "2017-09-26 03:48:03",
+            "deleted_at": null,
+            "created_by": 20,
+            "updated_by": 20,
+            "deleted_by": null,
+            "is_rated": true,
+            "rating": null,
+            "assignee": {
+                "id": 1,
+                "name": "Millennium @ Technology Park",
+                "property_name": "Millennium @ Technology Park",
+                "description": "Developer test suite",
+                "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                "zipcode": "57000",
+                "lng": "101.68871500",
+                "lat": "3.04764200",
+                "created_by": 1,
+                "updated_by": null,
+                "created_at": null,
+                "updated_at": null
+            },
+            "property": {
+                "id": 218,
+                "name": "Millennium @ Technology Park",
+                "belongs_to": "manager",
+                "belongs_to_id": 1,
+                "ownership": null,
+                "unit_number": "A-02-04",
+                "registered_property_id": 1,
+                "description": "Millennium @ Technology Park unit property",
+                "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                "zipcode": "57000",
+                "bedroom_nos": 3,
+                "bathroom_nos": 2,
+                "parking_nos": 2,
+                "floor_nos": 1,
+                "size": 850,
+                "size_unit": "sf",
+                "type": null,
+                "lng": "101.68871500",
+                "lat": "3.04764200",
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null,
+                "created_by": null,
+                "updated_by": null,
+                "deleted_by": null
+            },
+            "user": {
+                "id": 20,
+                "name": "Mr. Chris D'Amore V",
+                "nickname": null,
+                "email": "user-0007@millenium.com",
+                "facebook_id": null,
+                "google_id": null,
+                "avatar": "http://homenet.app/metro/pages/img/avatars/team15.jpg",
+                "register_as": null,
+                "phone1": null,
+                "phone2": null,
+                "mobile": null,
+                "active": null,
+                "created_at": null,
+                "updated_at": null
             }
         }
 
