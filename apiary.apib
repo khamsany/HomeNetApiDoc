@@ -77,6 +77,23 @@ Under Maintenance
 
 + Response 200
 
+### Activity Create [POST]
++ Attributes
+    + manager_id (number, required)
+    + subject (string, required)
+    + recipients (array, optional) - required if privacy = private
+    + privacy (enum,required) - private / public
++ Response 200
+
+
+### Recipients Topic [GET /topic/recipients/q]
++ Attributes
+    + manager_id (number, optional)
+    + query (string, optional)
+    + recipients (array, optional) - excluded user from listing
++ Response 200 (application/json)
+
+
 ## Announcement [/announcement]
     
 ### List [GET]
@@ -586,45 +603,19 @@ View details of the report
                 "created_by": 1,
                 "updated_by": null,
                 "created_at": null,
-                "updated_at": null,
-                "incident_types": [
-                    {
-                        "id": 1,
-                        "name": "Other",
-                        "description": null,
-                        "manager_id": 1,
-                        "created_at": "2017-09-26 03:44:39",
-                        "updated_at": "2017-09-26 03:44:39",
-                        "deleted_at": null,
-                        "created_by": 2,
-                        "updated_by": 14,
-                        "deleted_by": null
-                    },
-                    {
-                        "id": 2,
-                        "name": "Property Damage",
-                        "description": null,
-                        "manager_id": 1,
-                        "created_at": "2017-09-26 03:44:39",
-                        "updated_at": "2017-09-26 03:44:39",
-                        "deleted_at": null,
-                        "created_by": 2,
-                        "updated_by": 4,
-                        "deleted_by": null
-                    },
-                    {
-                        "id": 3,
-                        "name": "Injury",
-                        "description": null,
-                        "manager_id": 1,
-                        "created_at": "2017-09-26 03:44:39",
-                        "updated_at": "2017-09-26 03:44:39",
-                        "deleted_at": null,
-                        "created_by": 3,
-                        "updated_by": 1,
-                        "deleted_by": null
-                    }
-                ]
+                "updated_at": null
+            },
+            "type": {
+                "id": 3,
+                "name": "Injury",
+                "description": null,
+                "manager_id": 1,
+                "created_at": "2017-09-26 03:44:39",
+                "updated_at": "2017-09-26 03:44:39",
+                "deleted_at": null,
+                "created_by": 3,
+                "updated_by": 1,
+                "deleted_by": null
             }
         }
         
@@ -1322,6 +1313,67 @@ to get all user residency properties
     + manager_id (number, optional)
 + Response 200 (application/json)
 
+
+### Residence Role Create [POST /api/property]
++ Attributes
+    + manager_id (number, optional)
+    + property_name (string, optional)
+    + description (string, optional)
+    + address (string, optional)
+    + lat (string, optional)
+    + lng (string, optional)
+    + zipcode (string, optional)
+    + community_name (string, optional)
+    + bedroom_nos (string, optional)
+    + bathroom_nos (string, optional)
+    + parking_nos (string, optional)
+    + ownership (string, optional)
+    + unit_number (string, required)
+    + size (string, optional)
+    + size_unit (string, optional)
+    + viewStateId (number, required)
+    + viewStateTypeId (number, required)
+    
++ Response 200
+
+### Manager Role Create [POST /api/manager/{manager_id}]
++ Attributes
+    + manager_id (number, optional)
+    + property_name (string, optional)
+    + description (string, optional)
+    + address (string, optional)
+    + lat (string, optional)
+    + lng (string, optional)
+    + zipcode (string, optional)
+    + community_name (string, optional)
+    + contact_number (string, required)
+    + _method (string, optional) - PUT if property exist
+    + files (array, optional)
+    + viewStateId (number, required)
+    + viewStateTypeId (number, required)
+    
++ Response 200
+
+### Vendor Role Create [POST /api/vendor/]
++ Attributes
+    + name (string, optional)
+    + email (string, optional)
+    + phone1 (string, optional)
+    + mobile (string, optional)
+    + start_day (string, optional)
+    + end_day (string, optional)
+    + start_time (string, optional)
+    + end_time (string, optional)
+    + description (string, optional)
+    + categories (array, optional)
+    + radius (string, optional)
+    + lat (string, optional)
+    + lng (string, optional)
+    + address (string, optional)
+    + zipcode (string, optional)
+    + rid (string, optional)
+    
++ Response 200
 
 ## View State [/viewstate]
 Account view state management purpose
