@@ -1554,12 +1554,36 @@ Under Maintenance
 
 ## User [/user]
 
-### residency properties [GET /user/resident/properties{?manager_id}]
+### Residency properties [GET /user/resident/properties{?manager_id}]
 to get all user residency properties
 
 + Parameters
     + manager_id (number, optional)
 + Response 200 (application/json)
+
+### Details [Get /user/{id}]
+
++ Parameters
+    + id (number, required)
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "HomeNet Admin",
+            "nickname": null,
+            "email": "myihomenet@gmail.com",
+            "facebook_id": null,
+            "google_id": null,
+            "avatar": "http://homenet.app/metro/pages/img/avatars/team12.jpg",
+            "register_as": "manager",
+            "phone1": null,
+            "phone2": null,
+            "mobile": null,
+            "active": 1,
+            "created_at": null,
+            "updated_at": null
+        }
 
 
 ### Residence Role Create [POST /api/property]
