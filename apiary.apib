@@ -71,9 +71,14 @@ All Reference with * at the end is still under maintenance
         + 2 - Normal
         + 3 - High
 
-## Activity* [/activity]
-### Activity List [GET]
-Under Maintenance
+## Activity [/activity]
+### List [GET]
++ Request
+    + Attributes
+        + query (string, optional) - text search
+        + relation_type (string, optional) - announcement, topic etc..
+
++ Response 200 (application/json)
 
 + Response 200
 
@@ -751,7 +756,58 @@ Property manager api
             ],
             "images": []
         }
-    
+
+
+### Requests/Tasks [GET /manager/requests]
+List of manager's request/task
+
++ Request
+    + Attributes
+        + query (string, optional) - search text
+        + type (string, optional) - filter
+        + status (number, optional) - filter
+        
++ Response 200 (application/json)
+
+### Request/Task Details [GET /manager/request/{id}]
+Details of manager request/task
+
++ Parameters
+    + id (number, required) - request's id
+
++ Response 200 (application/json)
+
+        {
+            "id": 12,
+            "type": "MANAGER_REQUEST",
+            "belongs_to": "moderator",
+            "belongs_to_id": null,
+            "target": "App\\HomeNet\\Models\\Manager",
+            "target_id": 12,
+            "params": null,
+            "status": 1,
+            "created_at": "2017-09-26 03:49:50",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 321,
+            "updated_by": null,
+            "deleted_by": null,
+            "reference": {
+                "id": 12,
+                "name": "Sky 11 @ Singapore",
+                "property_name": "Sky 11 @ Singapore",
+                "description": "Presenting the magnificent freehold Sky@eleven. The stunning, iconic development in the heart of District 11 represents a new epitome in living. Sky@eleven is truly a testament to generous space.",
+                "address": "Management Corporation Strata, Title Plan No.3582, UEN: T10MC0119C 7 Thomson Lane #01-04, Singapore",
+                "zipcode": "297725",
+                "lng": "103.84039100",
+                "lat": "1.33062500",
+                "created_by": null,
+                "updated_by": null,
+                "created_at": null,
+                "updated_at": null
+            }
+        }
+        
 ## Neighborhood Explorer [/vendor]
 ### List [GET]
 + Attributes
@@ -937,10 +993,10 @@ View current logged user profile
 
 + Response 200
 
-### Update User Profile [PATCH /profile/{user_id}]
+### Update User Profile [PATCH /profile/{id}]
 + Request
     + Attributes
-        + id (number, required)
+        + id (number, required) - user id
         + name (string, required)
         + nickname
         + phone1
@@ -1160,6 +1216,35 @@ Under Maintenance
             "email": [
                 "The email field is required."
             ]
+        }
+
+### Resend Verification [GET /login/resend-verification/{id}]
++ Parameters
+    + id (number, required) - user id
+    
++ Response 200 (application/json) 
+
+        {
+            "message": "verification has been sent to myihomenet@gmail.com",
+            "email": "myihomenet@gmail.com"
+        }
+
+### Send Reset Password Link [POST /password/forgot]
+
++ Request
+    + Attributes
+        + email (string, required)
+
++ Response 200 (application/json)
+
+        {
+            "status": "We have e-mailed your password reset link!"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "email": "We can't find a user with that e-mail address."
         }
         
 ## Repository [/repository]
@@ -1561,7 +1646,7 @@ to get all user residency properties
     + manager_id (number, optional)
 + Response 200 (application/json)
 
-### Details [Get /user/{id}]
+### Details [GET /user/{id}]
 
 + Parameters
     + id (number, required)
@@ -1647,6 +1732,221 @@ to get all user residency properties
     
 + Response 200
 
+
+### Registered Items [GET /api/user/registered-items]
+
++ Response 200 (application/json)
+
+        {
+            "id": 2,
+            "name": "Khamsany Misran",
+            "nickname": null,
+            "email": "khamsany@yahoo.com",
+            "facebook_id": null,
+            "google_id": null,
+            "avatar": "http://homenet.app/metro/pages/img/avatars/team12.jpg",
+            "register_as": "manager",
+            "phone1": null,
+            "phone2": null,
+            "mobile": null,
+            "active": 1,
+            "created_at": null,
+            "updated_at": "2017-10-04 09:00:55",
+            "properties": [
+                {
+                    "id": 250,
+                    "name": "Millennium @ Technology Park",
+                    "belongs_to": "user",
+                    "belongs_to_id": 2,
+                    "ownership": "landlord",
+                    "unit_number": "A-05-04",
+                    "registered_property_id": 1,
+                    "description": "Millennium @ Technology Park unit property",
+                    "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                    "zipcode": "57000",
+                    "bedroom_nos": 3,
+                    "bathroom_nos": 2,
+                    "parking_nos": 2,
+                    "floor_nos": 1,
+                    "size": 1300,
+                    "size_unit": "sf",
+                    "type": null,
+                    "lng": "101.68871500",
+                    "lat": "3.04764200",
+                    "created_at": "2017-09-26 03:44:39",
+                    "updated_at": "2017-09-26 03:44:39",
+                    "deleted_at": null,
+                    "created_by": 2,
+                    "updated_by": 2,
+                    "deleted_by": null
+                },
+                {
+                    "id": 1043,
+                    "name": "Kinrara Mas @ Bukit Jalil",
+                    "belongs_to": "user",
+                    "belongs_to_id": 2,
+                    "ownership": "landlord",
+                    "unit_number": "B-05-07",
+                    "registered_property_id": 7,
+                    "description": "Kinrara Mas @ Bukit Jalil unit property",
+                    "address": "Jalan Kinrara 1 / Jalan Mas, Bandar Kinrara, 51200, Selangor, Puchong",
+                    "zipcode": "51200",
+                    "bedroom_nos": 3,
+                    "bathroom_nos": 2,
+                    "parking_nos": 2,
+                    "floor_nos": 1,
+                    "size": 850,
+                    "size_unit": "sf",
+                    "type": null,
+                    "lng": "101.64822300",
+                    "lat": "3.05698300",
+                    "created_at": "2017-09-26 03:46:11",
+                    "updated_at": "2017-09-26 03:46:11",
+                    "deleted_at": null,
+                    "created_by": 2,
+                    "updated_by": 2,
+                    "deleted_by": null
+                },
+                {
+                    "id": 1121,
+                    "name": "Mizumi Residence @ Kepong",
+                    "belongs_to": "user",
+                    "belongs_to_id": 2,
+                    "ownership": "landlord",
+                    "unit_number": "A-05-06",
+                    "registered_property_id": 8,
+                    "description": "Mizumi Residence @ Kepong unit property",
+                    "address": "Kepong Metropolitan Lake-garden, 52100 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                    "zipcode": "52100",
+                    "bedroom_nos": 4,
+                    "bathroom_nos": 3,
+                    "parking_nos": 3,
+                    "floor_nos": 2,
+                    "size": 2400,
+                    "size_unit": "sf",
+                    "type": null,
+                    "lng": "101.64564500",
+                    "lat": "3.22469100",
+                    "created_at": "2017-09-26 03:46:21",
+                    "updated_at": "2017-09-26 03:46:21",
+                    "deleted_at": null,
+                    "created_by": 2,
+                    "updated_by": 2,
+                    "deleted_by": null
+                },
+                {
+                    "id": 1569,
+                    "name": "Saville @ Melawati",
+                    "belongs_to": "user",
+                    "belongs_to_id": 2,
+                    "ownership": "landlord",
+                    "unit_number": "B-06-02",
+                    "registered_property_id": 11,
+                    "description": "Saville @ Melawati unit property",
+                    "address": "2, Jalan Kolam Air, Taman Desa Melawati, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                    "zipcode": "53100",
+                    "bedroom_nos": 3,
+                    "bathroom_nos": 2,
+                    "parking_nos": 2,
+                    "floor_nos": 1,
+                    "size": 1300,
+                    "size_unit": "sf",
+                    "type": null,
+                    "lng": "101.73893600",
+                    "lat": "3.21711900",
+                    "created_at": "2017-09-26 03:47:16",
+                    "updated_at": "2017-09-26 03:47:16",
+                    "deleted_at": null,
+                    "created_by": 2,
+                    "updated_by": 2,
+                    "deleted_by": null
+                }
+            ],
+            "manager_at": [
+                {
+                    "id": 1,
+                    "name": "Millennium @ Technology Park",
+                    "property_name": "Millennium @ Technology Park",
+                    "description": "Developer test suite",
+                    "address": "3, Enterprise 3B, Technology Park, Bukit Jalil, Kuala Lumpur",
+                    "zipcode": "57000",
+                    "lng": "101.68871500",
+                    "lat": "3.04764200",
+                    "created_by": 1,
+                    "updated_by": null,
+                    "created_at": null,
+                    "updated_at": null,
+                    "pivot": {
+                        "user_id": 2,
+                        "manager_id": 1,
+                        "created_at": null,
+                        "updated_at": null
+                    }
+                },
+                {
+                    "id": 7,
+                    "name": "Kinrara Mas @ Bukit Jalil",
+                    "property_name": "Kinrara Mas @ Bukit Jalil",
+                    "description": "Condominium in Kuala Lumpur, Malaysia",
+                    "address": "Jalan Kinrara 1 / Jalan Mas, Bandar Kinrara, 51200, Selangor, Puchong",
+                    "zipcode": "51200",
+                    "lng": "101.64822300",
+                    "lat": "3.05698300",
+                    "created_by": null,
+                    "updated_by": null,
+                    "created_at": null,
+                    "updated_at": null,
+                    "pivot": {
+                        "user_id": 2,
+                        "manager_id": 7,
+                        "created_at": null,
+                        "updated_at": null
+                    }
+                },
+                {
+                    "id": 8,
+                    "name": "Mizumi Residence @ Kepong",
+                    "property_name": "Mizumi Residence @ Kepong",
+                    "description": "Condominium in Kuala Lumpur, Malaysia",
+                    "address": "Kepong Metropolitan Lake-garden, 52100 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                    "zipcode": "52100",
+                    "lng": "101.64564500",
+                    "lat": "3.22469100",
+                    "created_by": null,
+                    "updated_by": null,
+                    "created_at": null,
+                    "updated_at": null,
+                    "pivot": {
+                        "user_id": 2,
+                        "manager_id": 8,
+                        "created_at": null,
+                        "updated_at": null
+                    }
+                },
+                {
+                    "id": 11,
+                    "name": "Saville @ Melawati",
+                    "property_name": "Saville @ Melawati",
+                    "description": "Condominium in Kuala Lumpur, Malaysia",
+                    "address": "2, Jalan Kolam Air, Taman Desa Melawati, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                    "zipcode": "53100",
+                    "lng": "101.73893600",
+                    "lat": "3.21711900",
+                    "created_by": null,
+                    "updated_by": null,
+                    "created_at": null,
+                    "updated_at": null,
+                    "pivot": {
+                        "user_id": 2,
+                        "manager_id": 11,
+                        "created_at": null,
+                        "updated_at": null
+                    }
+                }
+            ],
+            "vendor_at": []
+        }
+        
 ## View State [/viewstate]
 Account view state management purpose
 
