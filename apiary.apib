@@ -1637,6 +1637,91 @@ Under Maintenance
 
 + Response 200
 
+## Topic [/topic]
+
+### Details [GET /topic/{id}]
+to get topic details
++ Parameters
+    + id (number, required) - topic id
+
++ Response 200 (application/json)
+
+        {
+            "id": 60,
+            "subject": "What are some examples of bad design?",
+            "text": "Ut rem voluptas quam totam consectetur. Sed repellat eum cum. Occaecati distinctio commodi est eius aut hic minima. Sequi officiis ipsum magni dolorum autem officiis. Debitis veritatis est et nihil. Ut laboriosam illo voluptatum rerum. Suscipit dolores rerum quas alias nihil.",
+            "belongs_to_id": 7,
+            "belongs_to_type": "manager",
+            "category": "topic",
+            "type": "private",
+            "status": null,
+            "important": null,
+            "star": null,
+            "created_at": "2017-09-26 03:59:14",
+            "updated_at": "2017-09-26 03:59:14",
+            "deleted_at": null,
+            "created_by": 339,
+            "updated_by": 339,
+            "deleted_by": null,
+            "sender_id": 0,
+            "sender_type": "",
+            "sent_by": null,
+            "sent_at": null,
+            "total_comments": 16,
+            "author": {
+                "id": 339,
+                "name": "Administrator",
+                "nickname": null,
+                "email": "administrator@kinrara-mas.com",
+                "facebook_id": null,
+                "google_id": null,
+                "avatar": "http://homenet.app/metro/pages/img/avatars/team4.jpg",
+                "register_as": null,
+                "phone1": null,
+                "phone2": null,
+                "mobile": null,
+                "active": null,
+                "created_at": null,
+                "updated_at": null
+            },
+            "owner": {
+                "id": 7,
+                "name": "Kinrara Mas @ Bukit Jalil",
+                "property_name": "Kinrara Mas @ Bukit Jalil",
+                "description": "Condominium in Kuala Lumpur, Malaysia",
+                "address": "Jalan Kinrara 1 / Jalan Mas, Bandar Kinrara, 51200, Selangor, Puchong",
+                "zipcode": "51200",
+                "lng": "101.64822300",
+                "lat": "3.05698300",
+                "created_by": null,
+                "updated_by": null,
+                "created_at": null,
+                "updated_at": null
+            },
+            "members": [
+                {
+                    "id": 341,
+                    "name": "Janie Osinski",
+                    "nickname": null,
+                    "email": "user-0003@kinrara-mas.com",
+                    "facebook_id": null,
+                    "google_id": null,
+                    "avatar": "http://homenet.app/metro/pages/img/avatars/team14.jpg",
+                    "register_as": null,
+                    "phone1": null,
+                    "phone2": null,
+                    "mobile": null,
+                    "active": null,
+                    "created_at": null,
+                    "updated_at": null,
+                    "pivot": {
+                        "message_id": 60,
+                        "recipient_id": 341
+                    }
+                }
+            ]
+        }
+        
 ## User [/user]
 
 ### Residency properties [GET /user/resident/properties{?manager_id}]
