@@ -1026,13 +1026,14 @@ In order to get the api token, user need to authenticate with password grant (OA
 + Request (application/json)
 
     + Attributes
-    
-        + grant_type: password (string, required) - OAuth grant type
+        + grant_type: password (string, required) - OAuth grant type [password, social]
         + client_id (number, required) - The client id from system for password grant client.
         + client_secret (string, required) - The client secret from system.
-        + username (string, required) - User's username
-        + password (string, required) - User's password
-        + scope (string) - not applicable for now just left is empty
+        + network (string, required) - facebook, google. (Omit for password grant)
+        + token (string, required) - token from facebook / google (Omit for password grant)
+        + username (string, required) - User's username (Omit for social grant)
+        + password (string, required) - User's password (Omit for social grant)
+        + scope (string) - not applicable for now just left is empt
 
 + Response 200 (application/json)
 
@@ -1216,6 +1217,39 @@ Under Maintenance
             "email": [
                 "The email field is required."
             ]
+        }
+        
+### Create (Sosial Network) [POST /register/social]
++ Request
+    + Attributes
+        + email (string, required)
+        + token (string, required) - token from social network
+        + network (string, required) - network name e.g facebook, google
+        + register_as (string, required)
+    
++ Response 200 (application/json)
+
+        {
+            "id": 841,
+            "name": "Khamsany Misran",
+            "nickname": null,
+            "email": "khamsany@yahodfso.com",
+            "facebook_id": "10154770108097141",
+            "google_id": null,
+            "avatar": "https://graph.facebook.com/v2.10/10154770108097141/picture?width=1920",
+            "register_as": "landlord",
+            "phone1": null,
+            "phone2": null,
+            "mobile": null,
+            "active": 1,
+            "created_at": "2017-10-11 04:05:49",
+            "updated_at": "2017-10-11 04:05:49",
+            "auth": {
+                "token_type": "Bearer",
+                "expires_in": 5183999,
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImE0NDVhMzBlMTA0Mzk2ZDhhYmRmZTcxMjRjYjk2ZDMxNzViMmE5N2MyNzE5ZjI2YWE4M2RhMDdmOTNmNGY3OGZhM2IwOGUxMGZhNTg0OGVjIn0.eyJhdWQiOiIyIiwianRpIjoiYTQ0NWEzMGUxMDQzOTZkOGFiZGZlNzEyNGNiOTZkMzE3NWIyYTk3YzI3MTlmMjZhYTgzZGEwN2Y5M2Y0Zjc4ZmEzYjA4ZTEwZmE1ODQ4ZWMiLCJpYXQiOjE1MDc2OTYzNjcsIm5iZiI6MTUwNzY5NjM2NywiZXhwIjoxNTEyODgwMzY2LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.i1htxw5qX9NyRx12Po_0cGGQ5jE8y6rmbPi_KZ2UzpJuVYnUSqEaBQ98gN2C5SKXaucEJ42EiL8C3TQ29sMa3QBX6IxtmXrQw1CB6JclHcfMRhRldR8_LadmkZvt0QkLrv10ErePhKc94CcbzkHdvjmB79WmQNqMzjiO0biRK5WCab6lPqB7V933ncjSbKygeclT2gHqT35kF7IQsBFpcmmFTosHBoeb-K4GsI83RQ7BfzpocH3h2pekSza9dowkvTP4WPXMA2Hve15de6h2zWbxhQont_yLbBPCtSvGjGfis66sQq02JUOLgvMVML4c38Eqyou7NsNPmJqr2lwOu3vTBAqtRK3hbljr8PrE1r0iQ_MB3D1Zx48xX8r-D30QYowTe7biD5iP8tCTuOinNuQ3z9MtuC9g8cREUhYWaZxZ7HEq8ShPRyxvR_3sGgvliTpJJIizKqceIf81cJmJAKalaQm74XSLdZG6633rWKnWH7N4wag7zuLhu5DNZr0NejaHymgguoGYkwLvdY5OjwvkH0uDPfljpNTnYvu8os5b2KhzOdhWgtmSFQ9DXgutZAJSDwkkM9XfMyj0U-8ZAZ4w7YPXblnkKeb9G4XfV3ckxsqWf93GJKSUeu-nYYfDqbKqNL4xA_yed_bRZsri7Y9dsLWfVVnXYUf6U1pcBoM",
+                "refresh_token": "def50200414c278aa1aec5161902337ce0e89daa6f00aab890a1e975ee7ba3489c7851ba76c7ae93ffab487e8632bbdd9660f2542f0b7ed9c0376c8170d0ab75ecd06ffe4067123c4f288466e24cd6919eeb8cecbd0158612736b304f9e70cccbdcf2459d764d61287aa65dac2adf6d919ef0a68ed0414e19a705ac5f6e05ec8602acdd3dac304ea2391a63fe79ae23683d22b3707681cdf65fb6d41a03a2fb5ac23bf28cf159c07cfccd08d676ffac7ea314fbf89859ac6d9e3932935c9bde8d679d8689c5ce758f1dfc6947573c8894ef5b59cce836c8819d104b50a368026c65443ac0d35bba2390cddfd199775b6bb961b0b2221d51f70b9019090a31fcd47041a0e25199f52a75bea3a0decf3de99ae98631643e34e3e4c06b238db04434f9494c7abcefe7bc6458249f6702f47baa24d0061e3255e59fd59def1ed314a6b9714b9010ae78fa8c3199f33d73213f749bd5c326266a2b9256e4204309069df"
+            }
         }
 
 ### Resend Verification [GET /login/resend-verification/{id}]
